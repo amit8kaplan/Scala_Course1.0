@@ -1,8 +1,15 @@
-class Line(ps:Array[Point]) {
+import scala.math.abs
+import Util._
 
-	// read only values a and b
+class Line(ps: Array[Point]) {
+  require(ps.length >= 2, "At least two points are required for a line.")
 
-	// f
+  val a = covariance(ps.map(_.x), ps.map(_.y)) / variance(ps.map(_.x))
+  val b = mu(ps.map(_.y)) - a * mu(ps.map(_.x))
+  def getA: Double = a
+  def getB: Double = b
 
-	// dist
+  def f(x: Double): Double = a * x + b
+  def dist(p: Point): Double = abs(f(p.x) - p.y)
+
 }
