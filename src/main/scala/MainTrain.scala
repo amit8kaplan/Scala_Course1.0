@@ -18,7 +18,7 @@ object MainTrain {
     // Test for valid key and range
     if(!ts.getValues("B",1 to 3).get.sameElements(b))
       println("problem with getValues with range (-3)")
-    
+
 
     // Test for out of bounds index range but valid key
     if(ts.getValues("B",0 to 4)!=None || ts.getValues("B",-1 to 3)!=None)
@@ -52,21 +52,29 @@ object MainTrain {
   }
 
 
-//  // ZAnomalyDetector test
-//  def testZAD():Unit={
-//    val ts=new TimeSeries("train2.csv")
-//    val model=ZAnomalyDetector.learn(ts)
-//    val r0=ZAnomalyDetector.detect(model,ts)
-//    if(r0.length>0)
-//      println("there should not be any anomalies detected here (-10)")
-//    val r1=ZAnomalyDetector.detect(model,new TimeSeries("test2.csv"))
-//    if(r1.length!=1)
-//      println("there should be exactly one anomaly reported here (-10)")
-//    if(r1(0)._1!="A" || r1(0)._2!=19)
-//      println("wrong anomaly detected (-10)")
-//
-//  }
-//
+  // ZAnomalyDetector test
+  def testZAD():Unit={
+    val ts=new TimeSeries("train2.csv")
+    val model=ZAnomalyDetector.learn(ts)
+    val r0=ZAnomalyDetector.detect(model,ts)
+    if(r0.length>0)
+      println("there should not be any anomalies detected here (-10)")
+    else
+      println("no anomalies detected in training data (+10)" + r0.length)
+    val r1=ZAnomalyDetector.detect(model,new TimeSeries("test2.csv"))
+    if(r1.length!=1)
+      println("there should be exactly one anomaly reported here (-10)")
+    else
+      println("one anomaly detected in test data (+10)" + r1.length)
+    if(r1(0)._1!="A" || r1(0)._2!=19)
+      println("wrong anomaly detected (-10)")
+    else
+      println("correct anomaly detected (+10)"+r1(0)._1 + r1(0)._2)
+
+  }
+
+
+  //
 //  // LinearRegAnomalyDetector test
 //  def testLRAD():Unit={
 //    val ts=new TimeSeries("train3.csv")
@@ -115,7 +123,7 @@ object MainTrain {
   def main(args: Array[String]): Unit = {
 
     testTimeSeries()
-//    testZAD()
+    testZAD()
 //    testLRAD()
 //    testSSD()
 //    testHAD()
