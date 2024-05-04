@@ -7,6 +7,11 @@ object ZAnomalyDetector extends AnomalyDetector {
       feature -> maxZScore.toString
     }.toMap
     thresholds.view.mapValues(_.toString).toMap
+//    println("Feature\t\tThreshold")
+//    thresholds.foreach { case (feature, threshold) =>
+//      println(s"$feature\t\t$threshold")
+//    }
+    thresholds
   }
 
   override def detect(model: Map[String, String], test: TimeSeries): Vector[(String, Int)] = {
